@@ -1,6 +1,6 @@
 extends Node2D
 
-var cell = Vector2(20, 5)
+var cell = Vector2(0, 0)
 var dir = 0
 
 var size = 10
@@ -18,26 +18,18 @@ var directions = [
 ]
 
 func _input(event):
-	if Input.is_action_pressed("ui_right") and not(Input.is_action_pressed("ui_left")):
-		if Input.is_action_pressed("ui_up"):
-			print('Up Right')
-			dir = 5
-		elif Input.is_action_pressed("ui_down"):
-			print('Down Right')
-			dir = 1
-		else:
-			print('Right')
-			dir = 0
-	elif not(Input.is_action_pressed("ui_right")) and Input.is_action_pressed("ui_left"):
-		if Input.is_action_pressed("ui_up"):
-			print('Up Left')
-			dir = 4
-		elif Input.is_action_pressed("ui_down"):
-			print('Down Left')
-			dir = 2
-		else:
-			print('Left')
-			dir = 3
+	if Input.is_action_pressed("ui_up") and Input.is_action_pressed("ui_right") and not dir==2:
+		dir = 5
+	elif Input.is_action_pressed("ui_down") and Input.is_action_pressed("ui_left") and not dir==5:
+		dir = 2
+	elif Input.is_action_pressed("ui_up") and Input.is_action_pressed("ui_left") and not dir==1:
+		dir = 4
+	elif Input.is_action_pressed("ui_down") and Input.is_action_pressed("ui_right") and not dir==4:
+		dir = 1
+	elif Input.is_action_pressed("ui_left") and not dir==0:
+		dir = 3 
+	elif Input.is_action_pressed("ui_right") and not dir == 3:
+		dir = 0
 			
 func rotate_direction():
 	dir = (dir + 4) % len(directions)
