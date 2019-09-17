@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
-[ext_resource path="res://Snake.tscn" type="PackedScene" id=2]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,8 +10,7 @@ position = Vector2( 960, 120 )
 
 [node name="Grid" type="Node2D" parent="Field"]
 
-[node name="Snake" parent="Field" instance=ExtResource( 2 )]
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.3
 autostart = true
+

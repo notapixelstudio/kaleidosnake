@@ -1,39 +1,59 @@
 extends Node2D
 
 var grid = []
-const ROWS = 40
+const ROWS = 10
 const HEIGHT = 900
 var h = HEIGHT / ROWS
 var b = h*2.0/sqrt(3)
+const OFFSET = Vector2(20, 20)
 
 const Point = preload('res://Point.tscn')
 
 onready var snake = $Field/Snake
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	var row
-	
+	var this_grid = []
+	var grid = []
 	for i in ROWS:
-		row = []
-		for j in i+1:
-			var coords = ij2xy(Vector2(i, j))
-			var point = {
-				'i': i,
-				'j': j,
-				'node': Point.instance()
-			}
-			point['node'].position = Vector2(coords.x, coords.y)
-			row.append(point)
-			$Field/Grid.add_child(point['node'])
-		grid.append(row)
+		this_grid.append([])
+		grid.append([])
 		
+		var white = ROWS-i-1
+		var n_points = i*2+1
+		var r_points = 0
+		for j in ROWS*2-1:
+			
+			if j<white:
+				this_grid[i].append("-")
+				grid[i].append(null)
+			elif j>=white and j<n_points+white:
+				if r_points% 2:
+					this_grid[i].append("+")
+					grid[i].append(null)
+					r_points+=1
+					continue
+				var point = Point.instance()
+				point.position = OFFSET*Vector2(j, i)
+				grid[i].append(point)
+				$Field/Grid.add_child(point)
+				this_grid[i].append("x")
+				r_points += 1
+			else:
+				this_grid[i].append("-")
+				grid[i].append(null)
+	for i in ROWS:
+		print(this_grid[i])
+
+
 	# set up the snake
-	snake.world = self
-	update_snake_position()
+	#snake.world = self
+	#update_snake_position()
 	
 	# movement
-	$Timer.connect('timeout', self, '_on_tick')
+	#$Timer.connect('timeout', self, '_on_tick')
+	for i in ROWS:
+		print(grid[i])
 	
 func _on_tick():
 	snake.cell += snake.get_direction()
@@ -47,7 +67,7 @@ func update_snake_position():
 	if i >= ROWS:
 		# wrap bottom -> left
 		wrapping = true
-		snake.cell[0] = j
+		snake.cell[0] = j-1
 		snake.cell[1] = 0
 		if snake.dir == 2:
 			snake.rotate_direction()
@@ -67,6 +87,6 @@ func update_snake_position():
 	
 	snake.move(wrapping)
 	
-func ij2xy(ij):
-	return Vector2(ij[1]*b-ij[0]*b/2.0, ij[0]*h)
+#func ij2xy(ij):
+#	return Vector2(ij[1]*b-ij[0]*b/2.0, ij[0]*h)
 	
