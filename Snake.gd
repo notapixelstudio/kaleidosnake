@@ -55,10 +55,13 @@ func move(wrapping = false):
 			
 		for segment in $Tail.get_children():
 			segment.free()
-			
+		
 		for i in len(tail)-1:
 			var line = Line2D.new()
 			line.default_color = Color(1,1,1,1)
 			$Tail.add_child(line)
-			line.points = PoolVector2Array([world.ij2xy(tail[i]), world.ij2xy(tail[i+1])])
 			
+			if abs(tail[i+1].x - tail[i].x) > 1 or abs(tail[i].y - tail[i+1].y) > 1:
+				print(tail[i], " vs ", tail[i+1])
+			else:
+				line.points = PoolVector2Array([world.ij2xy(tail[i]), world.ij2xy(tail[i+1])])
