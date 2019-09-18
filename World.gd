@@ -88,7 +88,6 @@ func update_snake_position():
 		if snake.dir == 4:
 			snake.rotate_direction()
 	
-	pause_this = wrapping 
 	snake.move(wrapping)
 	
 func ij2xy(ij):
