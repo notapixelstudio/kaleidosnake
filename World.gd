@@ -58,7 +58,7 @@ func update_snake_position():
 		snake.cell[1] = i
 		if snake.dir == 0:
 			snake.rotate_direction()
-	elif j <= 0:
+	elif j < 0:
 		# wrap left -> right
 		wrapping = true
 		snake.cell[1] = len(grid[i])-1
