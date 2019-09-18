@@ -2,7 +2,7 @@ extends Node
 
 var grid = []
 const ROWS = 40
-const HEIGHT = 900
+const HEIGHT = 700
 var h = HEIGHT / ROWS
 var b = h*2.0/sqrt(3)
 
@@ -12,6 +12,8 @@ onready var snake = $MainView/Viewport/Field/Snake
 
 onready var main_view = $MainView/Viewport
 onready var view2 = $View2/Viewport
+onready var view3 = $View3/Viewport
+onready var view4 = $View4/Viewport
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,34 +41,42 @@ func _ready():
 	$Timer.connect('timeout', self, '_on_tick')
 	
 	view2.world_2d = main_view.world_2d
+	view3.world_2d = main_view.world_2d
+	view4.world_2d = main_view.world_2d
 	
+var ticks = 0
 func _on_tick():
 	snake.cell += snake.get_direction()
 	update_snake_position()
+	
+	ticks += 1
+	if ticks % 4 == 0:
+		snake.size += 1
 	
 func update_snake_position():
 	var i = int(snake.cell[0])
 	var j = int(snake.cell[1])
 	var wrapping = false
 	
-	if i >= ROWS:
+	if i >= ROWS-1:
 		# wrap bottom -> left
 		wrapping = true
 		snake.cell[0] = j
 		snake.cell[1] = 0
 		if snake.dir == 2:
 			snake.rotate_direction()
-	elif j >= len(grid[i]):
+	elif j >= len(grid[i])-1:
 		# wrap right -> bottom
 		wrapping = true
 		snake.cell[0] = ROWS-1
-		snake.cell[1] = i
+		snake.cell[1] = ROWS-1-i
 		if snake.dir == 0:
 			snake.rotate_direction()
-	elif j < 0:
+	elif j <= 0:
 		# wrap left -> right
 		wrapping = true
-		snake.cell[1] = len(grid[i])-1
+		snake.cell[0] = ROWS-i-1
+		snake.cell[1] = len(grid[ROWS-i-1])-1
 		if snake.dir == 4:
 			snake.rotate_direction()
 	
