@@ -1,6 +1,6 @@
 extends Node2D
 
-var cell = Vector2(0, 0)
+var cell = Vector2(20, 5)
 var dir = 0
 
 var size = 10
