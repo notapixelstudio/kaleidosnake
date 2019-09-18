@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Snake.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/shaders/crt.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 3 )
+shader_param/boost = 1.2
+shader_param/grille_opacity = 0.85
+shader_param/scanlines_opacity = 0.95
+shader_param/vignette_opacity = 0.2
+shader_param/scanlines_speed = 1.0
+shader_param/show_grille = true
+shader_param/show_scanlines = true
+shader_param/show_vignette = true
+shader_param/show_curvature = true
+shader_param/screen_size = Vector2( 320, 180 )
+shader_param/aberration_amount = 0.0
+shader_param/move_aberration = false
+shader_param/aberration_speed = 1.0
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -16,4 +33,16 @@ position = Vector2( 960, 120 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.3
 autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="CanvasLayer"]
+modulate = Color( 1, 1, 1, 0.243137 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer"]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 
