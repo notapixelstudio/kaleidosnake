@@ -15,8 +15,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="New Game Project"
+config/name="Kaleidosnake"
 run/main_scene="res://World.tscn"
+config/icon="res://icon.png"
 
 [display]
 
