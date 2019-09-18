@@ -21,7 +21,8 @@ func _ready():
 			var point = {
 				'i': i,
 				'j': j,
-				'node': Point.instance()
+				'node': Point.instance(),
+				"type": "empty"
 			}
 			point['node'].position = Vector2(coords.x, coords.y)
 			row.append(point)
@@ -65,7 +66,11 @@ func update_snake_position():
 		if snake.dir == 4:
 			snake.rotate_direction()
 	
+	print(check_cell(snake.cell))
 	snake.move(wrapping)
+
+func check_cell(cell):
+	return grid[cell.x][cell.y]
 	
 func ij2xy(ij):
 	return Vector2(ij[1]*b-ij[0]*b/2.0, ij[0]*h)
