@@ -45,18 +45,26 @@ func _ready():
 	view4.world_2d = main_view.world_2d
 	
 var ticks = 0
+
 func _on_tick():
+	if wrapping:
+		$Timer.paused = true
+		yield(get_tree().create_timer(0.2), "timeout")
+		$Timer.paused = false
 	snake.cell += snake.get_direction()
+	
 	update_snake_position()
 	
+		
 	ticks += 1
 	if ticks % 4 == 0:
 		snake.size += 1
-	
+
+var wrapping : bool  = false
 func update_snake_position():
 	var i = int(snake.cell[0])
 	var j = int(snake.cell[1])
-	var wrapping = false
+	wrapping = false
 	
 	if i >= ROWS-1:
 		# wrap bottom -> left
@@ -80,6 +88,7 @@ func update_snake_position():
 		if snake.dir == 4:
 			snake.rotate_direction()
 	
+	pause_this = wrapping 
 	snake.move(wrapping)
 	
 func ij2xy(ij):
