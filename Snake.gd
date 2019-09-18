@@ -48,20 +48,20 @@ func get_direction():
 func move(wrapping = false):
 	$Head.position = world.ij2xy(cell)
 	
-	if not wrapping:
-		tail.append(cell)
-		if len(tail) > size:
-			tail.pop_front()
-			
-		for segment in $Tail.get_children():
-			segment.free()
+
+	tail.append(cell)
+	if len(tail) > size:
+		tail.pop_front()
 		
-		for i in len(tail)-1:
-			var line = Line2D.new()
-			line.default_color = Color(1,1,1,1)
-			$Tail.add_child(line)
-			
-			if abs(tail[i+1].x - tail[i].x) > 1 or abs(tail[i].y - tail[i+1].y) > 1:
-				print(tail[i], " vs ", tail[i+1])
-			else:
-				line.points = PoolVector2Array([world.ij2xy(tail[i]), world.ij2xy(tail[i+1])])
+	for segment in $Tail.get_children():
+		segment.free()
+	
+	for i in len(tail)-1:
+		var line = Line2D.new()
+		line.default_color = Color(1,1,1,1)
+		$Tail.add_child(line)
+		
+		if abs(tail[i+1].x - tail[i].x) > 1 or abs(tail[i].y - tail[i+1].y) > 1:
+			print(tail[i], " vs ", tail[i+1])
+		else:
+			line.points = PoolVector2Array([world.ij2xy(tail[i]), world.ij2xy(tail[i+1])])
