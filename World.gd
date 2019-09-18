@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 var grid = []
 const ROWS = 40
@@ -8,7 +8,10 @@ var b = h*2.0/sqrt(3)
 
 const Point = preload('res://Point.tscn')
 
-onready var snake = $Field/Snake
+onready var snake = $MainView/Viewport/Field/Snake
+
+onready var main_view = $MainView/Viewport
+onready var view2 = $View2/Viewport
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,7 +28,7 @@ func _ready():
 			}
 			point['node'].position = Vector2(coords.x, coords.y)
 			row.append(point)
-			$Field/Grid.add_child(point['node'])
+			$MainView/Viewport/Field/Grid.add_child(point['node'])
 		grid.append(row)
 		
 	# set up the snake
@@ -34,6 +37,8 @@ func _ready():
 	
 	# movement
 	$Timer.connect('timeout', self, '_on_tick')
+	
+	view2.world_2d = main_view.world_2d
 	
 func _on_tick():
 	snake.cell += snake.get_direction()
