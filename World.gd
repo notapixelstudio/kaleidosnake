@@ -65,7 +65,7 @@ func update_snake_position():
 	var i = int(snake.cell[0])
 	var j = int(snake.cell[1])
 	wrapping = false
-	
+	var missed_cell = snake.cell
 	if i >= ROWS-1:
 		# wrap bottom -> left
 		wrapping = true
@@ -87,8 +87,9 @@ func update_snake_position():
 		snake.cell[1] = len(grid[ROWS-i-1])-1
 		if snake.dir == 4:
 			snake.rotate_direction()
-	
-	snake.move(wrapping)
+	if not wrapping:
+		missed_cell = null
+	snake.move(missed_cell)
 	
 func ij2xy(ij):
 	return Vector2(ij[1]*b-ij[0]*b/2.0, ij[0]*h)

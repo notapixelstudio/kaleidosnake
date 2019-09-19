@@ -45,10 +45,12 @@ func rotate_direction():
 func get_direction():
 	return directions[dir]
 	
-func move(wrapping = false):
+func move(missed_cell):
 	$Head.position = world.ij2xy(cell)
 	
-
+	if missed_cell:
+		tail.append(missed_cell)
+		
 	tail.append(cell)
 	if len(tail) > size:
 		tail.pop_front()
@@ -57,11 +59,12 @@ func move(wrapping = false):
 		segment.free()
 	
 	for i in len(tail)-1:
+		
 		var line = Line2D.new()
 		line.default_color = Color(1,1,1,1)
 		$Tail.add_child(line)
 		
 		if abs(tail[i+1].x - tail[i].x) > 1 or abs(tail[i].y - tail[i+1].y) > 1:
-			print(tail[i], " vs ", tail[i+1])
+			pass
 		else:
 			line.points = PoolVector2Array([world.ij2xy(tail[i]), world.ij2xy(tail[i+1])])
