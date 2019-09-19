@@ -7,6 +7,8 @@ var size = 10
 var tail = []
 
 var world
+signal dead
+enum DIR {RIGHT, DOWNRIGHT, DOWNLEFT, LEFT, UPLEFT, UPRIGHT}
 
 var directions = [
 	Vector2(0, 1), # 0 right
@@ -21,23 +23,29 @@ func _input(event):
 	if Input.is_action_pressed("ui_right") and not(Input.is_action_pressed("ui_left")):
 		if Input.is_action_pressed("ui_up"):
 			print('Up Right')
-			dir = 5
+			if not dir == 2:
+				dir = 5
 		elif Input.is_action_pressed("ui_down"):
 			print('Down Right')
-			dir = 1
+			if not dir == 4:
+				dir = 1
 		else:
 			print('Right')
-			dir = 0
+			if not dir == 3:
+				dir = 0
 	elif not(Input.is_action_pressed("ui_right")) and Input.is_action_pressed("ui_left"):
 		if Input.is_action_pressed("ui_up"):
 			print('Up Left')
-			dir = 4
+			if not dir == 1:
+				dir = 4
 		elif Input.is_action_pressed("ui_down"):
 			print('Down Left')
-			dir = 2
+			if not dir == 5:
+				dir = 2
 		else:
 			print('Left')
-			dir = 3
+			if not dir == 0:
+				dir = 3
 			
 func rotate_direction():
 	dir = (dir + 4) % len(directions)
@@ -53,7 +61,8 @@ func move(missed_cell):
 		
 	tail.append(cell)
 	if len(tail) > size:
-		tail.pop_front()
+		var to_be_removed = tail.pop_front()
+		world.remove_cell(to_be_removed)
 		
 	for segment in $Tail.get_children():
 		segment.free()
@@ -68,3 +77,7 @@ func move(missed_cell):
 			pass
 		else:
 			line.points = PoolVector2Array([world.ij2xy(tail[i]), world.ij2xy(tail[i+1])])
+	
+	if world.check_cell(cell).type == "snake":
+		emit_signal("dead")
+	world.add_cell(cell, "snake")

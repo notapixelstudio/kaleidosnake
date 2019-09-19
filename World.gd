@@ -56,12 +56,18 @@ func _on_tick():
 	
 	update_snake_position()
 	
-		
 	ticks += 1
 	if ticks % 4 == 0:
 		snake.size += 1
 
 var wrapping : bool  = false
+
+func remove_cell(removed_cell):
+	grid[removed_cell.x][removed_cell.y].type = "empty"
+	
+func add_cell(cell, what):
+	grid[cell.x][cell.y].type = what
+	
 func update_snake_position():
 	var i = int(snake.cell[0])
 	var j = int(snake.cell[1])
