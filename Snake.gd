@@ -3,7 +3,7 @@ extends Node2D
 var cell = Vector2(20, 5)
 var dir = 0
 
-var size = 10 setget growing
+var size = 5 setget growing
 var tail = []
 
 var world
@@ -83,10 +83,17 @@ func move(missed_cell):
 		else:
 			line.points = PoolVector2Array([world.ij2xy(tail[i]), world.ij2xy(tail[i+1])])
 	
-	if world.check_cell(cell).type == "snake":
+	var where = world.check_cell(cell)
+	if where.type == "snake":
 		die()
+	elif where.type == "food":
+		eat(cell)
 	world.add_cell(cell, "snake")
 
+func eat(food_cell):
+	self.size+=1
+	world.remove_cell(food_cell)
+	
 signal stop
 func die():
 	emit_signal("stop")

@@ -7,7 +7,7 @@ var h = HEIGHT / ROWS
 var b = h*2.0/sqrt(3)
 
 export var grid_color : Color = Color.gray
-const Point = preload('res://Point.tscn')
+export var FoodScene : PackedScene
 
 onready var snake = $MainView/Viewport/Field/Snake
 onready var gameover = $CanvasLayer/GameOver
@@ -23,6 +23,7 @@ onready var hud = $CanvasLayer/HUD
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	snake.connect("stop", self, "stop")
 	snake.connect("dead", self, "_on_gameover")
 	snake.connect("grown", self, "snake_bigger")
@@ -36,13 +37,17 @@ func _ready():
 				'i': i,
 				'j': j,
 				'position': Vector2(coords.x, coords.y),
-				"type": "empty"
+				"type": "empty",
+				"object": null
 			}
 			point.visible = false
 			row.append(point)
 			
 		grid.append(row)
 		
+	# set up the first food
+	add_food()
+	
 	# set up the snake
 	snake.world = self
 	update_snake_position()
@@ -101,12 +106,15 @@ func _on_tick():
 	update_snake_position()
 	
 	ticks += 1
-	if ticks % 4 == 0:
-		snake.size += 1
 
 var wrapping : bool  = false
 
 func remove_cell(removed_cell):
+	if grid[removed_cell.x][removed_cell.y].object:
+		grid[removed_cell.x][removed_cell.y].object.queue_free()
+		grid[removed_cell.x][removed_cell.y].object = null
+		add_food()
+		
 	grid[removed_cell.x][removed_cell.y].type = "empty"
 	
 func add_cell(cell, what):
@@ -156,3 +164,20 @@ func _on_gameover():
 	
 func snake_bigger(score):
 	hud.update_score(score)
+
+	
+func add_food():
+	yield(get_tree().create_timer(1), "timeout")
+	var food = FoodScene.instance()
+	var rand_row = (randi()+1) % len(grid)
+	var rand_col = (randi()+1) % len(grid[rand_row])
+	while(grid[rand_row][rand_col].type != "empty"):
+		print("That unlucky, ", str(rand_row), " ", str(rand_col))
+		rand_row = randi() % len(grid)
+		rand_col = randi()%len(grid[rand_row])
+	var rand_pos = Vector2(rand_row, rand_col)
+	food.position = ij2xy(rand_pos)
+	grid[rand_row][rand_col].type = "food"
+	grid[rand_row][rand_col].object = food
+	$MainView/Viewport/Field.add_child(food)
+	

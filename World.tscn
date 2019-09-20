@@ -1,14 +1,15 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
-[ext_resource path="res://Snake.tscn" type="PackedScene" id=2]
-[ext_resource path="res://gameover.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/shaders/crt.shader" type="Shader" id=4]
-[ext_resource path="res://HUD.gd" type="Script" id=5]
-[ext_resource path="res://assets/font/joystix/joystix monospace.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Food.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Snake.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gameover.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/shaders/crt.shader" type="Shader" id=5]
+[ext_resource path="res://HUD.gd" type="Script" id=6]
+[ext_resource path="res://assets/font/joystix/joystix monospace.ttf" type="DynamicFontData" id=7]
 
 [sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 4 )
+shader = ExtResource( 5 )
 shader_param/boost = 1.2
 shader_param/grille_opacity = 0.85
 shader_param/scanlines_opacity = 0.95
@@ -24,14 +25,14 @@ shader_param/move_aberration = false
 shader_param/aberration_speed = 1.0
 
 [sub_resource type="DynamicFont" id=2]
-font_data = ExtResource( 6 )
+font_data = ExtResource( 7 )
 
 [node name="World" type="Node"]
 script = ExtResource( 1 )
 grid_color = Color( 0.74902, 0.74902, 0.74902, 0.392157 )
+FoodScene = ExtResource( 2 )
 
 [node name="MainView" type="ViewportContainer" parent="."]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -54,7 +55,7 @@ current = true
 
 [node name="Grid" type="Node2D" parent="MainView/Viewport/Field"]
 
-[node name="Snake" parent="MainView/Viewport/Field" instance=ExtResource( 2 )]
+[node name="Snake" parent="MainView/Viewport/Field" instance=ExtResource( 3 )]
 
 [node name="View2" type="ViewportContainer" parent="."]
 editor/display_folded = true
@@ -145,7 +146,7 @@ autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="GameOver" parent="CanvasLayer" instance=ExtResource( 3 )]
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
 
 [node name="Background" type="ColorRect" parent="CanvasLayer"]
@@ -166,7 +167,7 @@ margin_top = 40.0
 margin_right = 762.0
 margin_bottom = 83.0
 custom_constants/separation = 10
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="Score" type="Label" parent="CanvasLayer/HUD"]
 margin_top = 11.0
