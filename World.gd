@@ -6,6 +6,7 @@ const HEIGHT = 700
 var h = HEIGHT / ROWS
 var b = h*2.0/sqrt(3)
 
+export var grid_color : Color = Color.gray
 const Point = preload('res://Point.tscn')
 
 onready var snake = $MainView/Viewport/Field/Snake
@@ -19,7 +20,7 @@ onready var view4 = $View4/Viewport
 func _ready():
 	var row
 	
-	for i in ROWS:
+	for i in ROWS:		
 		row = []
 		for j in i+1:
 			var coords = ij2xy(Vector2(i, j))
@@ -31,6 +32,9 @@ func _ready():
 			}
 			point['node'].position = Vector2(coords.x, coords.y)
 			row.append(point)
+			
+			
+			
 			$MainView/Viewport/Field/Grid.add_child(point['node'])
 		grid.append(row)
 		
@@ -45,6 +49,42 @@ func _ready():
 	view3.world_2d = main_view.world_2d
 	view4.world_2d = main_view.world_2d
 	
+	# horizantal line
+	for row in grid:
+		var line = Line2D.new()
+		$MainView/Viewport/Field/Grid.add_child(line)
+		line.width = 3
+		line.name = "Horizontal"
+		line.default_color = grid_color
+		line.light_mask |= 1 << 1
+		for point in row:
+			line.add_point(point["node"].position)
+	
+	# down right line
+	for i in len(grid)-1:
+		var line = Line2D.new()
+		$MainView/Viewport/Field/Grid.add_child(line)
+		line.width = 3
+		line.name = "DownRight"
+		line.default_color = grid_color
+		line.light_mask |= 1 << 1
+		for j in range(i, len(grid)):
+			line.add_point(grid[j][len(grid[j])-1-i]["node"].position)
+			
+		#print(line.points)
+	
+	# down left line
+	for i in len(grid)-1:
+		var line = Line2D.new()
+		$MainView/Viewport/Field/Grid.add_child(line)
+		line.width = 3
+		line.name = "DownLeft"
+		line.default_color = grid_color
+		line.light_mask |= 1 << 1
+		for j in range(i, len(grid)):
+			print(j, "-", i)
+			
+			line.add_point(grid[j][i]["node"].position)
 var ticks = 0
 
 func _on_tick():
