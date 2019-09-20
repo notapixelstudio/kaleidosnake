@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Snake.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/shaders/crt.shader" type="Shader" id=3]
+[ext_resource path="res://gameover.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/shaders/crt.shader" type="Shader" id=4]
+[ext_resource path="res://HUD.gd" type="Script" id=5]
+[ext_resource path="res://assets/font/joystix/joystix monospace.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 3 )
+shader = ExtResource( 4 )
 shader_param/boost = 1.2
 shader_param/grille_opacity = 0.85
 shader_param/scanlines_opacity = 0.95
@@ -20,11 +23,15 @@ shader_param/aberration_amount = 0.0
 shader_param/move_aberration = false
 shader_param/aberration_speed = 1.0
 
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 6 )
+
 [node name="World" type="Node"]
 script = ExtResource( 1 )
 grid_color = Color( 0.74902, 0.74902, 0.74902, 0.392157 )
 
 [node name="MainView" type="ViewportContainer" parent="."]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -50,6 +57,7 @@ current = true
 [node name="Snake" parent="MainView/Viewport/Field" instance=ExtResource( 2 )]
 
 [node name="View2" type="ViewportContainer" parent="."]
+editor/display_folded = true
 modulate = Color( 1, 1, 1, 0.45098 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -137,6 +145,9 @@ autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource( 3 )]
+visible = false
+
 [node name="Background" type="ColorRect" parent="CanvasLayer"]
 modulate = Color( 1, 1, 1, 0.156863 )
 anchor_right = 1.0
@@ -146,4 +157,60 @@ anchor_bottom = 1.0
 material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="HUD" type="HBoxContainer" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -771.0
+margin_top = 40.0
+margin_right = 762.0
+margin_bottom = 83.0
+custom_constants/separation = 10
+script = ExtResource( 5 )
+
+[node name="Score" type="Label" parent="CanvasLayer/HUD"]
+margin_top = 11.0
+margin_right = 78.0
+margin_bottom = 31.0
+custom_fonts/font = SubResource( 2 )
+text = "Score:"
+uppercase = true
+
+[node name="ScoreCount" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 88.0
+margin_top = 11.0
+margin_right = 101.0
+margin_bottom = 31.0
+custom_fonts/font = SubResource( 2 )
+text = "0"
+uppercase = true
+
+[node name="Padding" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 111.0
+margin_top = 11.0
+margin_right = 1370.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+uppercase = true
+
+[node name="Highscore" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 1380.0
+margin_top = 11.0
+margin_right = 1510.0
+margin_bottom = 31.0
+custom_fonts/font = SubResource( 2 )
+text = "HIGHSCORE:"
+uppercase = true
+
+[node name="HighscoreCount" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 1520.0
+margin_top = 11.0
+margin_right = 1533.0
+margin_bottom = 31.0
+custom_fonts/font = SubResource( 2 )
+text = "0"
+align = 1
+valign = 1
+uppercase = true
 

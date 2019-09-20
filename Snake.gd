@@ -3,7 +3,7 @@ extends Node2D
 var cell = Vector2(20, 5)
 var dir = 0
 
-var size = 10
+var size = 10 setget growing
 var tail = []
 
 var world
@@ -19,6 +19,11 @@ var directions = [
 	Vector2(-1, 0) # 5 up right
 ]
 
+signal grown
+func growing(new_value):
+	size = new_value
+	emit_signal("grown", get_tail_size())
+	
 func _input(event):
 	if Input.is_action_pressed("ui_right") and not(Input.is_action_pressed("ui_left")):
 		if Input.is_action_pressed("ui_up"):
@@ -79,5 +84,15 @@ func move(missed_cell):
 			line.points = PoolVector2Array([world.ij2xy(tail[i]), world.ij2xy(tail[i+1])])
 	
 	if world.check_cell(cell).type == "snake":
-		emit_signal("dead")
+		die()
 	world.add_cell(cell, "snake")
+
+signal stop
+func die():
+	emit_signal("stop")
+	$AnimationPlayer.play("die")
+	yield($AnimationPlayer, "animation_finished")
+	emit_signal("dead")
+
+func get_tail_size():
+	return size

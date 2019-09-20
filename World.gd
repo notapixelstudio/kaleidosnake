@@ -10,17 +10,25 @@ export var grid_color : Color = Color.gray
 const Point = preload('res://Point.tscn')
 
 onready var snake = $MainView/Viewport/Field/Snake
+onready var gameover = $CanvasLayer/GameOver
 
 onready var main_view = $MainView/Viewport
 onready var view2 = $View2/Viewport
 onready var view3 = $View3/Viewport
 onready var view4 = $View4/Viewport
 
+onready var timer = $Timer
+
+onready var hud = $CanvasLayer/HUD
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	snake.connect("stop", self, "stop")
+	snake.connect("dead", self, "_on_gameover")
+	snake.connect("grown", self, "snake_bigger")
 	var row
 	
-	for i in ROWS:		
+	for i in ROWS:
 		row = []
 		for j in i+1:
 			var coords = ij2xy(Vector2(i, j))
@@ -139,4 +147,12 @@ func check_cell(cell):
 
 func ij2xy(ij):
 	return Vector2(ij[1]*b-ij[0]*b/2.0, ij[0]*h)
+
+func stop():
+	timer.stop()
+
+func _on_gameover():
+	gameover.start()
 	
+func snake_bigger(score):
+	hud.update_score(score)

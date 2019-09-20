@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/spark_0.png" type="Texture" id=1]
+[ext_resource path="res://assets/spark_1.png" type="Texture" id=2]
+[ext_resource path="res://assets/spark_2.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends AnimatedSprite
+
+const MEDAL_RADIUS: int = 11
+
+func _ready() -> void:
+  #to_random_pos()
+  
+  var tex_medal: TextureRect = get_parent()
+  tex_medal.connect(\"shown\", $anim, \"play\", [\"shine\"])
+
+func to_random_pos() -> void:
+  var rand_angle : float = deg2rad(rand_range(0, 360))
+  var rand_radius: float = rand_range(0, MEDAL_RADIUS)
+  var x: int = int(rand_radius * cos(rand_angle)) + MEDAL_RADIUS
+  var y: int = int(rand_radius * sin(rand_angle)) + MEDAL_RADIUS
+  position = Vector2(x, y)"
+
+[sub_resource type="Animation" id=3]
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1, 0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "to_random_pos"
+} ]
+}
+
+[node name="spr_spark" type="AnimatedSprite"]
+frames = SubResource( 1 )
+script = SubResource( 2 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+playback_speed = 0.8
+anims/shine = SubResource( 3 )
+
