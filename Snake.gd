@@ -92,7 +92,7 @@ func move(missed_cell):
 
 func eat(food_cell):
 	self.size+=1
-	world.remove_cell(food_cell)
+	world.eat_food(food_cell)
 	
 signal stop
 func die():

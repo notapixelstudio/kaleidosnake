@@ -106,15 +106,19 @@ func _on_tick():
 	update_snake_position()
 	
 	ticks += 1
+	if not ticks % 20:
+		print("less time ", str($Timer.wait_time))
+		$Timer.wait_time -= 0.001
 
 var wrapping : bool  = false
 
-func remove_cell(removed_cell):
+func eat_food(removed_cell):
 	if grid[removed_cell.x][removed_cell.y].object:
 		grid[removed_cell.x][removed_cell.y].object.queue_free()
 		grid[removed_cell.x][removed_cell.y].object = null
 		add_food()
-		
+	remove_cell(removed_cell)
+func remove_cell(removed_cell):
 	grid[removed_cell.x][removed_cell.y].type = "empty"
 	
 func add_cell(cell, what):
@@ -169,12 +173,12 @@ func snake_bigger(score):
 func add_food():
 	yield(get_tree().create_timer(1), "timeout")
 	var food = FoodScene.instance()
-	var rand_row = (randi()+1) % len(grid)
-	var rand_col = (randi()+1) % len(grid[rand_row])
-	while(grid[rand_row][rand_col].type != "empty"):
+	var rand_row = (randi()+1) % (len(grid)-1)
+	var rand_col = (randi()+1) % (len(grid[rand_row])-1)
+	while(grid[rand_row][rand_col].type != "empty") or rand_row == 0 or rand_col == 0:
 		print("That unlucky, ", str(rand_row), " ", str(rand_col))
-		rand_row = randi() % len(grid)
-		rand_col = randi()%len(grid[rand_row])
+		rand_row = randi() % (len(grid)-1)
+		rand_col = randi()%(len(grid[rand_row])-1)
 	var rand_pos = Vector2(rand_row, rand_col)
 	food.position = ij2xy(rand_pos)
 	grid[rand_row][rand_col].type = "food"
