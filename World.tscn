@@ -22,7 +22,7 @@ shader_param/aberration_speed = 1.0
 
 [node name="World" type="Node"]
 script = ExtResource( 1 )
-grid_color = Color( 0.74902, 0.74902, 0.74902, 0.443137 )
+grid_color = Color( 0.74902, 0.74902, 0.74902, 0.392157 )
 
 [node name="MainView" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -146,8 +146,4 @@ anchor_bottom = 1.0
 material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-
-[node name="Line2D" type="Line2D" parent="."]
-points = PoolVector2Array( 380, 380, 23, 54, 42, 32 )
-texture_mode = -1808822640
 

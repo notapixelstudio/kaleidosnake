@@ -27,15 +27,12 @@ func _ready():
 			var point = {
 				'i': i,
 				'j': j,
-				'node': Point.instance(),
+				'position': Vector2(coords.x, coords.y),
 				"type": "empty"
 			}
-			point['node'].position = Vector2(coords.x, coords.y)
+			point.visible = false
 			row.append(point)
 			
-			
-			
-			$MainView/Viewport/Field/Grid.add_child(point['node'])
 		grid.append(row)
 		
 	# set up the snake
@@ -58,7 +55,7 @@ func _ready():
 		line.default_color = grid_color
 		line.light_mask |= 1 << 1
 		for point in row:
-			line.add_point(point["node"].position)
+			line.add_point(point.position)
 	
 	# down right line
 	for i in len(grid)-1:
@@ -69,7 +66,7 @@ func _ready():
 		line.default_color = grid_color
 		line.light_mask |= 1 << 1
 		for j in range(i, len(grid)):
-			line.add_point(grid[j][len(grid[j])-1-i]["node"].position)
+			line.add_point(grid[j][len(grid[j])-1-i].position)
 			
 		#print(line.points)
 	
@@ -82,9 +79,8 @@ func _ready():
 		line.default_color = grid_color
 		line.light_mask |= 1 << 1
 		for j in range(i, len(grid)):
-			print(j, "-", i)
 			
-			line.add_point(grid[j][i]["node"].position)
+			line.add_point(grid[j][i].position)
 var ticks = 0
 
 func _on_tick():
