@@ -99,7 +99,7 @@ var ticks = 0
 func _on_tick():
 	if wrapping:
 		$Timer.paused = true
-		yield(get_tree().create_timer(0.2), "timeout")
+		yield(snake, "warped")
 		$Timer.paused = false
 	snake.cell += snake.get_direction()
 	
@@ -119,8 +119,14 @@ func eat_food(removed_cell):
 		add_food()
 	remove_cell(removed_cell)
 func remove_cell(removed_cell):
-	grid[removed_cell.x][removed_cell.y].type = "empty"
-	
+	if removed_cell.x < len(grid):
+		if removed_cell.y < len(grid[removed_cell.x]):
+			grid[removed_cell.x][removed_cell.y].type = "empty"
+		else: 
+			print_debug(str(removed_cell), " is not in grid")
+	else:
+		print_debug(str(removed_cell), " is not in grid")
+		
 func add_cell(cell, what):
 	grid[cell.x][cell.y].type = what
 	

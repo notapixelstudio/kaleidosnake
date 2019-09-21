@@ -27,28 +27,28 @@ func growing(new_value):
 func _input(event):
 	if Input.is_action_pressed("ui_right") and not(Input.is_action_pressed("ui_left")):
 		if Input.is_action_pressed("ui_up"):
-			print('Up Right')
+			#print('Up Right')
 			if not dir == 2:
 				dir = 5
 		elif Input.is_action_pressed("ui_down"):
-			print('Down Right')
+			#print('Down Right')
 			if not dir == 4:
 				dir = 1
 		else:
-			print('Right')
+			#print('Right')
 			if not dir == 3:
 				dir = 0
 	elif not(Input.is_action_pressed("ui_right")) and Input.is_action_pressed("ui_left"):
 		if Input.is_action_pressed("ui_up"):
-			print('Up Left')
+			#print('Up Left')
 			if not dir == 1:
 				dir = 4
 		elif Input.is_action_pressed("ui_down"):
-			print('Down Left')
+			#print('Down Left')
 			if not dir == 5:
 				dir = 2
 		else:
-			print('Left')
+			#print('Left')
 			if not dir == 0:
 				dir = 3
 			
@@ -62,6 +62,7 @@ func move(missed_cell):
 	$Head.position = world.ij2xy(cell)
 	
 	if missed_cell:
+		warp(missed_cell, cell)
 		tail.append(missed_cell)
 		
 	tail.append(cell)
@@ -103,3 +104,13 @@ func die():
 
 func get_tail_size():
 	return size
+
+signal warped
+func warp(from, to):
+	$WarpedHead.visible = true
+	$Tween.interpolate_property($WarpedHead, "position", world.ij2xy(from), world.ij2xy(to), 0.6, Tween.EASE_OUT_IN, Tween.EASE_OUT)
+	$Tween.start()
+	yield($Tween, "tween_completed")
+	$WarpedHead.visible = false
+	emit_signal("warped")
+	
