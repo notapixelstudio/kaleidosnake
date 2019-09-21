@@ -6,7 +6,6 @@ export var game_scene: PackedScene
 func start() -> void:
 	$anim.play("show")
 	$AudioStreamPlayer.play()
-	
 	yield($anim, "animation_finished")
 	$Options/Play.grab_focus()
 	

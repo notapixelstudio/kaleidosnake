@@ -221,3 +221,5 @@ stream = ExtResource( 8 )
 wait_time = 0.2
 autostart = true
 
+[node name="MusicFade" type="Tween" parent="."]
+

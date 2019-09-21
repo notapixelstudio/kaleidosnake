@@ -21,8 +21,11 @@ onready var timer = $Timer
 
 onready var hud = $CanvasLayer/HUD
 
+var highscore = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	highscore = global.highscore
+	hud.update_highscore(highscore)
 	
 	randomize()
 	snake.connect("stop", self, "stop")
@@ -172,12 +175,24 @@ func ij2xy(ij):
 
 func stop():
 	timer.stop()
+	fade_music()
+
+func fade_music():
+	$MusicFade.interpolate_property($Soundtrack, "volume_db",
+			0, -50, 1.0, Tween.TRANS_SINE, Tween.EASE_IN)
+	$MusicFade.start()
+	yield($MusicFade, "tween_completed")
 	$Soundtrack.stop()
 
 func _on_gameover():
 	gameover.start()
+	global.highscore = highscore
+	persistance.save_game()
 	
 func snake_bigger(score):
+	if score > highscore:
+		highscore = score
+		hud.update_highscore(score)
 	hud.update_score(score)
 
 	

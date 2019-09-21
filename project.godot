@@ -24,6 +24,11 @@ config/name="Kaleidosnake"
 run/main_scene="res://intro_scene/intro_scene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+persistance="*res://globals/persistance.gd"
+global="*res://globals/global.gd"
+
 [display]
 
 window/size/width=1920
