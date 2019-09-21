@@ -112,6 +112,7 @@ func get_tail_size():
 
 signal warped
 func warp(from, to):
+	$SoundWarp.play()
 	$WarpedHead.visible = true
 	$Tween.interpolate_property($WarpedHead, "position", world.ij2xy(from), world.ij2xy(to), 0.6, Tween.EASE_OUT_IN, Tween.EASE_OUT)
 	$Tween.start()
