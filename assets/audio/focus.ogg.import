@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/focus.ogg-cdb0f5bec93deb81072cffe4fe8950d0.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/focus.ogg"
+dest_files=[ "res://.import/focus.ogg-cdb0f5bec93deb81072cffe4fe8950d0.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

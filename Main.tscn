@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://World.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://assets/font/joystix/joystix monospace.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/animations/wiggle.tres" type="Animation" id=5]
 [ext_resource path="res://assets/audio/main.ogg" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/focus.ogg" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/selected.ogg" type="AudioStream" id=8]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://assets/font/joystix/joystix monospace.ttf"
@@ -46,10 +48,10 @@ signal focus
 
 func _ready():
 	for option in get_children():
-		option.connect(\"focus_entered\", self, \"_on_focus\", [option])
+		if option is Button:
+			option.connect(\"focus_entered\", self, \"_on_focus\", [option])
 
 func _on_focus(node: Control):
-	print(node.name, \" should focus\")
 	emit_signal(\"focus\", node)"
 
 [sub_resource type="Animation" id=8]
@@ -170,6 +172,7 @@ custom_fonts/font = SubResource( 3 )
 text = "BEST"
 
 [node name="Cursor" type="Position2D" parent="."]
+visible = false
 position = Vector2( 777, 710 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Cursor"]
@@ -230,6 +233,12 @@ anims/show = SubResource( 8 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="Focus" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Selected" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
 
 [connection signal="focus" from="Options" to="." method="_on_Options_focus"]
 [connection signal="pressed" from="Options/Play" to="." method="_on_Play_pressed"]

@@ -21,6 +21,7 @@ func _on_btn_play_pressed():
 
 
 func _on_Options_focus(focus_node):
+	$Focus.play()
 	if not cursor.visible:
 		cursor.visible = true
 	cursor.position.x = $Options.rect_position.x + focus_node.rect_position.x - 30

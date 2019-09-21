@@ -184,12 +184,12 @@ func snake_bigger(score):
 func add_food():
 	yield(get_tree().create_timer(1), "timeout")
 	var food = FoodScene.instance()
-	var rand_row = clamp(2, randi() % len(grid), len(grid)-1)
-	var rand_col = clamp(2, randi()% len(grid[rand_row]), len(grid[rand_row])-1)
+	var rand_row = clamp(2, randi() % (len(grid)-1), len(grid) -1)
+	var rand_col = clamp(1, randi()% (len(grid[rand_row])-1), len(grid[rand_row])-1)
 	while(grid[rand_row][rand_col].type != "empty"):
 		print("That unlucky, ", str(rand_row), " ", str(rand_col))
-		rand_row = clamp(2, randi() % len(grid), len(grid)-1)
-		rand_col = clamp(2, randi()% len(grid[rand_row]), len(grid[rand_row])-1)
+		rand_row = clamp(2, randi() % (len(grid)-1), len(grid)-1)
+		rand_col = clamp(1, randi()% (len(grid[rand_row])-1), len(grid[rand_row])-1)
 	var rand_pos = Vector2(rand_row, rand_col)
 	food.position = ij2xy(rand_pos)
 	grid[rand_row][rand_col].type = "food"
