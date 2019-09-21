@@ -174,8 +174,10 @@ func add_food():
 	yield(get_tree().create_timer(1), "timeout")
 	var food = FoodScene.instance()
 	var rand_row = (randi()+1) % (len(grid)-1)
+	while rand_row == 0:
+		rand_row = (randi()+1) % (len(grid)-1)
 	var rand_col = (randi()+1) % (len(grid[rand_row])-1)
-	while(grid[rand_row][rand_col].type != "empty") or rand_row == 0 or rand_col == 0:
+	while(grid[rand_row][rand_col].type != "empty") or rand_col == 0:
 		print("That unlucky, ", str(rand_row), " ", str(rand_col))
 		rand_row = randi() % (len(grid)-1)
 		rand_col = randi()%(len(grid[rand_row])-1)
