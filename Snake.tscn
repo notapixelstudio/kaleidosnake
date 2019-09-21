@@ -1,23 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Snake.gd" type="Script" id=1]
 [ext_resource path="res://assets/point.png" type="Texture" id=2]
-
-[sub_resource type="Animation" id=1]
-resource_name = "die"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("Head:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, true, false, true, false, true ]
-}
+[ext_resource path="res://assets/audio/dead.ogg" type="AudioStream" id=3]
+[ext_resource path="res://assets/audio/20.ogg" type="AudioStream" id=4]
 
 [node name="Snake" type="Node2D"]
 script = ExtResource( 1 )
@@ -36,8 +22,11 @@ modulate = Color( 1, 0, 0, 1 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/die = SubResource( 1 )
-
 [node name="Tween" type="Tween" parent="."]
+
+[node name="SoundDead" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="SoundEat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
 

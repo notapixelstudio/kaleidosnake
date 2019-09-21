@@ -19,6 +19,8 @@ var directions = [
 	Vector2(-1, 0) # 5 up right
 ]
 
+onready var sound_dead = $SoundDead
+	
 signal grown
 func growing(new_value):
 	size = new_value
@@ -91,12 +93,15 @@ func move(missed_cell):
 		eat(cell)
 	world.add_cell(cell, "snake")
 
+onready var sound_eat = $SoundEat
 func eat(food_cell):
+	sound_eat.play()
 	self.size+=1
 	world.eat_food(food_cell)
 	
 signal stop
 func die():
+	sound_dead.play()
 	emit_signal("stop")
 	$AnimationPlayer.play("die")
 	yield($AnimationPlayer, "animation_finished")

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/snake_theme.ogg-64a155aff7082e965f5c0e00e7949e13.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/snake_theme.ogg"
+dest_files=[ "res://.import/snake_theme.ogg-64a155aff7082e965f5c0e00e7949e13.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

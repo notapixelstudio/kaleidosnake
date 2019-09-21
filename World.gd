@@ -23,6 +23,7 @@ onready var hud = $CanvasLayer/HUD
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	randomize()
 	snake.connect("stop", self, "stop")
 	snake.connect("dead", self, "_on_gameover")
@@ -44,13 +45,16 @@ func _ready():
 			row.append(point)
 			
 		grid.append(row)
-		
+	
+	$Soundtrack.play()
+		# set up the snake
+	snake.world = self
+	update_snake_position()
+	
+	
 	# set up the first food
 	add_food()
 	
-	# set up the snake
-	snake.world = self
-	update_snake_position()
 	
 	# movement
 	$Timer.connect('timeout', self, '_on_tick')
@@ -192,4 +196,5 @@ func add_food():
 	grid[rand_row][rand_col].type = "food"
 	grid[rand_row][rand_col].object = food
 	$MainView/Viewport/Field.add_child(food)
+	food.appear()
 	

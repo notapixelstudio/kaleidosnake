@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Food.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/shaders/crt.shader" type="Shader" id=5]
 [ext_resource path="res://HUD.gd" type="Script" id=6]
 [ext_resource path="res://assets/font/joystix/joystix monospace.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://assets/audio/snake_theme.ogg" type="AudioStream" id=8]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 5 )
@@ -33,6 +34,7 @@ grid_color = Color( 0.74902, 0.74902, 0.74902, 0.392157 )
 FoodScene = ExtResource( 2 )
 
 [node name="MainView" type="ViewportContainer" parent="."]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -140,11 +142,8 @@ position = Vector2( 382, 204 )
 rotating = true
 current = true
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.2
-autostart = true
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 
 [node name="GameOver" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
@@ -214,4 +213,11 @@ text = "0"
 align = 1
 valign = 1
 uppercase = true
+
+[node name="Soundtrack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
 
