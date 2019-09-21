@@ -3,7 +3,7 @@
 [ext_resource path="res://Snake.gd" type="Script" id=1]
 [ext_resource path="res://assets/point.png" type="Texture" id=2]
 [ext_resource path="res://assets/audio/dead.ogg" type="AudioStream" id=3]
-[ext_resource path="res://assets/audio/eat.ogg" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/gnam.ogg" type="AudioStream" id=4]
 [ext_resource path="res://assets/audio/warp.ogg" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=1]
@@ -43,6 +43,7 @@ texture = ExtResource( 2 )
 
 [node name="SoundDead" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+volume_db = 2.506
 
 [node name="SoundEat" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )

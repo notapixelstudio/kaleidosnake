@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://World.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Main.tscn" type="PackedScene" id=1]
 [ext_resource path="res://intro_scene/sfx_cinematic-drum-hit.wav" type="AudioStream" id=2]
 [ext_resource path="res://intro_scene/NormalMap2.jpg" type="Texture" id=3]
 [ext_resource path="res://intro_scene/Logo-GE-I.png" type="Texture" id=4]
