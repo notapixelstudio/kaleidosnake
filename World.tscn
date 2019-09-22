@@ -26,6 +26,7 @@ shader_param/move_aberration = false
 shader_param/aberration_speed = 1.0
 
 [sub_resource type="DynamicFont" id=2]
+size = 24
 font_data = ExtResource( 7 )
 
 [node name="World" type="Node"]
@@ -34,7 +35,6 @@ grid_color = Color( 0.74902, 0.74902, 0.74902, 0.392157 )
 FoodScene = ExtResource( 2 )
 
 [node name="MainView" type="ViewportContainer" parent="."]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -143,7 +143,6 @@ rotating = true
 current = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="GameOver" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
@@ -152,6 +151,7 @@ visible = false
 modulate = Color( 1, 1, 1, 0.156863 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+color = Color( 0.572549, 0.572549, 0.572549, 1 )
 
 [node name="CRT" type="ColorRect" parent="CanvasLayer"]
 material = SubResource( 1 )
@@ -169,45 +169,45 @@ custom_constants/separation = 10
 script = ExtResource( 6 )
 
 [node name="Score" type="Label" parent="CanvasLayer/HUD"]
-margin_top = 11.0
-margin_right = 78.0
-margin_bottom = 31.0
+margin_top = 7.0
+margin_right = 120.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 2 )
 text = "Score:"
 uppercase = true
 
 [node name="ScoreCount" type="Label" parent="CanvasLayer/HUD"]
-margin_left = 88.0
-margin_top = 11.0
-margin_right = 101.0
-margin_bottom = 31.0
+margin_left = 130.0
+margin_top = 7.0
+margin_right = 150.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 2 )
 text = "0"
 uppercase = true
 
 [node name="Padding" type="Label" parent="CanvasLayer/HUD"]
-margin_left = 111.0
-margin_top = 11.0
-margin_right = 1370.0
-margin_bottom = 31.0
+margin_left = 160.0
+margin_top = 7.0
+margin_right = 1293.0
+margin_bottom = 36.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 uppercase = true
 
 [node name="Highscore" type="Label" parent="CanvasLayer/HUD"]
-margin_left = 1380.0
-margin_top = 11.0
-margin_right = 1510.0
-margin_bottom = 31.0
+margin_left = 1303.0
+margin_top = 7.0
+margin_right = 1503.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 2 )
 text = "HIGHSCORE:"
 uppercase = true
 
 [node name="HighscoreCount" type="Label" parent="CanvasLayer/HUD"]
-margin_left = 1520.0
-margin_top = 11.0
+margin_left = 1513.0
+margin_top = 7.0
 margin_right = 1533.0
-margin_bottom = 31.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 2 )
 text = "0"
 align = 1

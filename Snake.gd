@@ -175,6 +175,9 @@ func move(missed_cell):
 		
 		var line = Line2D.new()
 		line.default_color = Color(1,1,1,1)
+		line.begin_cap_mode = Line2D.LINE_CAP_ROUND
+		line.end_cap_mode = Line2D.LINE_CAP_ROUND
+		
 		$Tail.add_child(line)
 		
 		if abs(tail[i+1].x - tail[i].x) > 1 or abs(tail[i].y - tail[i+1].y) > 1:
