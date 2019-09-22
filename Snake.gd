@@ -59,6 +59,11 @@ func _input(event):
 			#print('Up Left')
 			if not stack_dir[0] == DIR.DOWNRIGHT:
 				dir = DIR.UPLEFT
+		else:
+			if stack_dir[0] == DIR.RIGHT:
+				dir = DIR.UPRIGHT
+			elif stack_dir[0] == DIR.LEFT:
+				dir = DIR.UPLEFT
 				
 	if event.is_action_released("ui_up") or event.is_action_released("ui_down"):
 		if Input.is_action_pressed("ui_right"):
@@ -91,6 +96,11 @@ func _input(event):
 		elif Input.is_action_pressed("ui_left"):
 			#print('Up Left')
 			if not stack_dir[0] == DIR.UPRIGHT:
+				dir = DIR.DOWNLEFT
+		else:
+			if stack_dir[0] == DIR.RIGHT:
+				dir = DIR.DOWNRIGHT
+			elif stack_dir[0] == DIR.LEFT:
 				dir = DIR.DOWNLEFT
 				
 	# JOYPAD
