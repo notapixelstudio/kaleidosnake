@@ -27,33 +27,92 @@ func growing(new_value):
 	emit_signal("grown", get_tail_size())
 	
 func _input(event):
+	if Input.is_action_just_pressed("ui_right") or event.is_action_released("ui_right"):
+		if Input.is_action_pressed("ui_up"):
+			#print('Up Right')
+			if not dir == DIR.DOWNLEFT:
+				dir = DIR.UPRIGHT
+		elif Input.is_action_just_pressed("ui_down"):
+			#print('Down Right')
+			if not dir == DIR.UPLEFT:
+				dir = DIR.DOWNRIGHT
+		else:
+			#print('Right')
+			if not dir == DIR.LEFT:
+				dir = DIR.RIGHT
+				
+	if Input.is_action_just_pressed("ui_up"):
+		if Input.is_action_pressed("ui_right"):
+			#print('Up Right')
+			if not dir == DIR.DOWNLEFT:
+				dir = DIR.UPRIGHT
+		elif Input.is_action_pressed("ui_left"):
+			#print('Up Left')
+			if not dir == DIR.DOWNRIGHT:
+				dir = DIR.UPLEFT
+				
+	if event.is_action_released("ui_up") or event.is_action_released("ui_down"):
+		if Input.is_action_pressed("ui_right"):
+			#print('Right')
+			if not dir == DIR.LEFT:
+				dir = DIR.RIGHT
+		elif Input.is_action_pressed("ui_left"):
+			#print('Left')
+			if not dir == DIR.RIGHT:
+				dir = DIR.LEFT
+
+	if Input.is_action_just_pressed("ui_left") or event.is_action_released("ui_left"):
+		if Input.is_action_pressed("ui_up"):
+			#print('Up Left')
+			if not dir == DIR.DOWNRIGHT:
+				dir = DIR.UPLEFT
+		elif Input.is_action_pressed("ui_down"):
+			#print('Down Left')
+			if not dir == DIR.UPRIGHT:
+				dir = DIR.DOWNLEFT
+		else:
+			#print('Left')
+			if not dir == DIR.RIGHT:
+				dir = DIR.LEFT
+				
+	if Input.is_action_just_pressed("ui_down"):
+		if Input.is_action_pressed("ui_right"):
+			if not dir == DIR.UPLEFT:
+				dir = DIR.DOWNRIGHT
+		elif Input.is_action_pressed("ui_left"):
+			#print('Up Left')
+			if not dir == DIR.UPRIGHT:
+				dir = DIR.DOWNLEFT
+				
+			
+	"""
 	if Input.is_action_pressed("ui_right") and not(Input.is_action_pressed("ui_left")):
 		if Input.is_action_pressed("ui_up"):
 			#print('Up Right')
-			if not dir == 2:
-				dir = 5
+			if not dir == DIR.DOWNLEFT:
+				dir = DIR.UPRIGHT
 		elif Input.is_action_pressed("ui_down"):
 			#print('Down Right')
-			if not dir == 4:
-				dir = 1
+			if not dir == DIR.UPLEFT:
+				dir = DIR.DOWNRIGHT
 		else:
 			#print('Right')
-			if not dir == 3:
-				dir = 0
+			if not dir == DIR.LEFT:
+				dir = DIR.RIGHT
 	elif not(Input.is_action_pressed("ui_right")) and Input.is_action_pressed("ui_left"):
 		if Input.is_action_pressed("ui_up"):
 			#print('Up Left')
-			if not dir == 1:
-				dir = 4
+			if not dir == DIR.DOWNRIGHT:
+				dir = DIR.UPLEFT
 		elif Input.is_action_pressed("ui_down"):
 			#print('Down Left')
-			if not dir == 5:
-				dir = 2
+			if not dir == DIR.UPRIGHT:
+				dir = DIR.DOWNLEFT
 		else:
 			#print('Left')
-			if not dir == 0:
-				dir = 3
-			
+			if not dir == DIR.RIGHT:
+				dir = DIR.LEFT
+		"""
 func rotate_direction():
 	dir = (dir + 4) % len(directions)
 	
