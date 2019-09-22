@@ -119,7 +119,7 @@ func _on_tick():
 	ticks += 1
 	if not ticks % 20:
 		print("less time ", str($Timer.wait_time))
-		$Timer.wait_time -= 0.001
+		$Timer.wait_time -= 0.004
 
 var wrapping : bool  = false
 

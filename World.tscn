@@ -222,4 +222,3 @@ wait_time = 0.2
 autostart = true
 
 [node name="MusicFade" type="Tween" parent="."]
-

@@ -174,7 +174,8 @@ func move(missed_cell):
 	for i in len(tail)-1:
 		
 		var line = Line2D.new()
-		line.default_color = Color(1,1,1,1)
+		line.default_color = Color(1,0,0,1)
+		line.width = 8
 		line.begin_cap_mode = Line2D.LINE_CAP_ROUND
 		line.end_cap_mode = Line2D.LINE_CAP_ROUND
 		
@@ -195,7 +196,7 @@ func move(missed_cell):
 onready var sound_eat = $SoundEat
 func eat(food_cell):
 	sound_eat.play()
-	self.size+=1
+	self.size += 2
 	world.eat_food(food_cell)
 	
 signal stop
