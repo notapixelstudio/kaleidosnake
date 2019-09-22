@@ -9,6 +9,15 @@ var tail = []
 var world
 signal dead
 enum DIR {RIGHT, DOWNRIGHT, DOWNLEFT, LEFT, UPLEFT, UPRIGHT}
+var joy_dir = [
+	Vector2(1, 0), # 0 right
+	Vector2(1, 1), # 1 down right
+	Vector2(-1, 1), # 2 down left
+	Vector2(-1, 0), # 3 left
+	Vector2(-1, -1), # 4 up left
+	Vector2(1, -1) # 5 up right
+
+]
 
 var directions = [
 	Vector2(0, 1), # 0 right
@@ -84,7 +93,22 @@ func _input(event):
 			if not stack_dir[0] == DIR.UPRIGHT:
 				dir = DIR.DOWNLEFT
 				
-			
+	# JOYPAD
+	if event is InputEventJoypadMotion:
+		# xAxis is a value from +/0 0-1 depending on how hard the stick is being pressed
+		var target = Vector2()
+		
+		target.x = Input.get_joy_axis(event.device, JOY_AXIS_0)  
+		target.y = Input.get_joy_axis(event.device, JOY_AXIS_1)
+		
+		target.x = int(target.x)
+		target.y = int(target.y)
+		
+		var index = joy_dir.find(target)
+		if index < 0:
+			index = dir
+		print(target)
+		dir = index
 	"""
 	if Input.is_action_pressed("ui_right") and not(Input.is_action_pressed("ui_left")):
 		if Input.is_action_pressed("ui_up"):
