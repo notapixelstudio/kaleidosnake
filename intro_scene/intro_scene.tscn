@@ -496,5 +496,4 @@ theme = SubResource( 14 )
 text = "Game Jam #1 - Fall 2019"
 align = 1
 valign = 1
-
 [connection signal="timeout" from="intro_anim/tmr_splashscreen" to="." method="_on_tmr_splashscreen_timeout"]

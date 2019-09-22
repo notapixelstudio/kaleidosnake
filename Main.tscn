@@ -89,7 +89,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.7 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 740, 180 ), Vector2( 740, 200 ) ]
+"values": [ Vector2( 0, 180 ), Vector2( 0, 200 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("tex_panelscore:rect_position")
@@ -111,14 +111,9 @@ script = ExtResource( 1 )
 game_scene = ExtResource( 2 )
 
 [node name="Tex" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -220.0
-margin_top = -340.0
-margin_right = 221.0
-margin_bottom = -114.0
+margin_top = 360.0
+margin_right = 1920.0
+margin_bottom = 420.0
 custom_fonts/font = SubResource( 2 )
 text = "Kaleidosnake"
 align = 1
@@ -239,7 +234,6 @@ stream = ExtResource( 7 )
 
 [node name="Selected" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
-
 [connection signal="focus" from="Options" to="." method="_on_Options_focus"]
 [connection signal="pressed" from="Options/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="Options/Quit" to="." method="_on_Quit_pressed"]
