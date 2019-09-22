@@ -3,7 +3,7 @@ extends Node2D
 var cell = Vector2(20, 5)
 var dir = 0
 
-var size = 5 setget growing
+var size = 3 setget growing
 var tail = []
 
 var world
@@ -30,58 +30,58 @@ func _input(event):
 	if Input.is_action_just_pressed("ui_right") or event.is_action_released("ui_right"):
 		if Input.is_action_pressed("ui_up"):
 			#print('Up Right')
-			if not dir == DIR.DOWNLEFT:
+			if not stack_dir[0] == DIR.DOWNLEFT:
 				dir = DIR.UPRIGHT
-		elif Input.is_action_just_pressed("ui_down"):
+		elif Input.is_action_pressed("ui_down"):
 			#print('Down Right')
-			if not dir == DIR.UPLEFT:
+			if not stack_dir[0] == DIR.UPLEFT:
 				dir = DIR.DOWNRIGHT
 		else:
 			#print('Right')
-			if not dir == DIR.LEFT:
+			if not stack_dir[0] == DIR.LEFT:
 				dir = DIR.RIGHT
 				
 	if Input.is_action_just_pressed("ui_up"):
 		if Input.is_action_pressed("ui_right"):
 			#print('Up Right')
-			if not dir == DIR.DOWNLEFT:
+			if not stack_dir[0] == DIR.DOWNLEFT:
 				dir = DIR.UPRIGHT
 		elif Input.is_action_pressed("ui_left"):
 			#print('Up Left')
-			if not dir == DIR.DOWNRIGHT:
+			if not stack_dir[0] == DIR.DOWNRIGHT:
 				dir = DIR.UPLEFT
 				
 	if event.is_action_released("ui_up") or event.is_action_released("ui_down"):
 		if Input.is_action_pressed("ui_right"):
 			#print('Right')
-			if not dir == DIR.LEFT:
+			if not stack_dir[0] == DIR.LEFT:
 				dir = DIR.RIGHT
 		elif Input.is_action_pressed("ui_left"):
 			#print('Left')
-			if not dir == DIR.RIGHT:
+			if not stack_dir[0] == DIR.RIGHT:
 				dir = DIR.LEFT
 
 	if Input.is_action_just_pressed("ui_left") or event.is_action_released("ui_left"):
 		if Input.is_action_pressed("ui_up"):
 			#print('Up Left')
-			if not dir == DIR.DOWNRIGHT:
+			if not stack_dir[0] == DIR.DOWNRIGHT:
 				dir = DIR.UPLEFT
 		elif Input.is_action_pressed("ui_down"):
 			#print('Down Left')
-			if not dir == DIR.UPRIGHT:
+			if not stack_dir[0] == DIR.UPRIGHT:
 				dir = DIR.DOWNLEFT
 		else:
 			#print('Left')
-			if not dir == DIR.RIGHT:
+			if not stack_dir[0] == DIR.RIGHT:
 				dir = DIR.LEFT
 				
 	if Input.is_action_just_pressed("ui_down"):
 		if Input.is_action_pressed("ui_right"):
-			if not dir == DIR.UPLEFT:
+			if not stack_dir[0] == DIR.UPLEFT:
 				dir = DIR.DOWNRIGHT
 		elif Input.is_action_pressed("ui_left"):
 			#print('Up Left')
-			if not dir == DIR.UPRIGHT:
+			if not stack_dir[0] == DIR.UPRIGHT:
 				dir = DIR.DOWNLEFT
 				
 			
@@ -115,11 +115,14 @@ func _input(event):
 		"""
 func rotate_direction():
 	dir = (dir + 4) % len(directions)
-	
+
+var stack_dir = [0]
 func get_direction():
 	return directions[dir]
 	
 func move(missed_cell):
+	if dir != stack_dir[0]:
+		stack_dir.insert(0, dir)
 	$Head.position = world.ij2xy(cell)
 	
 	if missed_cell:
@@ -160,6 +163,7 @@ func eat(food_cell):
 	
 signal stop
 func die():
+	print(stack_dir)
 	sound_dead.play()
 	emit_signal("stop")
 	$AnimationPlayer.play("die")

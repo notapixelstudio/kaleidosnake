@@ -108,7 +108,10 @@ func _on_tick():
 		$Timer.paused = true
 		yield(snake, "warped")
 		$Timer.paused = false
-	snake.cell += snake.get_direction()
+	if snake.cell + snake.get_direction() == snake.tail[len(snake.tail)-1]:
+		snake.cell += snake.stack_dir[0]
+	else:
+		snake.cell += snake.get_direction()
 	
 	update_snake_position()
 	
