@@ -24,7 +24,8 @@ onready var hud = $CanvasLayer/HUD
 var highscore = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	highscore = global.highscore
+	if global.highscore:
+		highscore = global.highscore
 	hud.update_highscore(highscore)
 	
 	randomize()
