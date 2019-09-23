@@ -196,7 +196,7 @@ func move(missed_cell):
 onready var sound_eat = $SoundEat
 func eat(food_cell):
 	sound_eat.play()
-	self.size += 2
+	self.size += 3
 	world.eat_food(food_cell)
 	
 signal stop

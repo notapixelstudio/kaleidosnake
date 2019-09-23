@@ -5,3 +5,6 @@ export_presets.cfg
 .mono/
 .directory
 *~
+
+# directory structure
+release

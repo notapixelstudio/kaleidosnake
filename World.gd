@@ -109,8 +109,8 @@ func _on_tick():
 		$Timer.paused = true
 		yield(snake, "warped")
 		$Timer.paused = false
-	if snake.cell + snake.get_direction() == snake.tail[len(snake.tail)-1]:
-		snake.cell += snake.stack_dir[0]
+	if snake.cell + snake.get_direction() == snake.tail[len(snake.tail)-1] or wrapping:
+		snake.cell += snake.directions[snake.stack_dir[0]]
 	else:
 		snake.cell += snake.get_direction()
 	
@@ -119,7 +119,8 @@ func _on_tick():
 	ticks += 1
 	if not ticks % 20:
 		print("less time ", str($Timer.wait_time))
-		$Timer.wait_time -= 0.004
+		$Timer.wait_time -= 0.002
+		$Timer.wait_time = max($Timer.wait_time, 0.005)
 
 var wrapping : bool  = false
 
